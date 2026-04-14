@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可爱表白代码</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            /* 软萌背景色 */
+            background: linear-gradient(135deg, #ffeff5 0%, #fff0f0 100%);
+            font-family: "Microsoft YaHei", sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .question-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(255, 192, 203, 0.2);
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 22px;
+            color: #ff6b8b;
+            margin: 0;
+            font-weight: bold;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .option {
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: bold;
+        }
+        #yes {
+            background-color: #ff6b8b;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 139, 0.4);
+        }
+        #no {
+            background-color: #f8f8f8;
+            color: #555;
+            border: 2px solid #eee;
+        }
+        .option:active {
+            transform: scale(0.9);
+        }
+        /* 飘落特效层 */
+        .falling-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .element {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            animation: fall 5s linear forwards;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-10%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="question-box">
+            <h1 id="question">🐶 小狗愿意继续和我一起吗？</h1>
+        </div>
+        <div class="btn-group">
+            <button class="option" id="yes">🥰 愿意</button>
+            <button class="option" id="no">😢 不愿意</button>
+        </div>
+    </div>
+    <div class="falling-elements" id="fallingElements"></div>
+
+    <script>
+        const question = document.getElementById('question');
+        const yesBtn = document.getElementById('yes');
+        const noBtn = document.getElementById('no');
+        const fallingElements = document.getElementById('fallingElements');
+        let yesScale = 1;
+        let noScale = 1;
+
+        // 可爱元素表情符号
+        const cuteElements = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🐶', '🐾', '🍬', '🍭'];
+
+        noBtn.addEventListener('click', () => {
+            yesScale += 0.15;
+            noScale -= 0.1;
+            question.style.transform = `scale(${yesScale})`;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            noBtn.style.transform = `scale(${noScale})`;
+            // 加一点抖动效果更可爱
+            question.style.filter = `brightness(${100 + yesScale * 10}%)`;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            // 生成大量可爱元素
+            for (let i = 0; i < 80; i++) {
+                const element = document.createElement('div');
+                element.className = 'element';
+                // 随机选一个可爱表情
+                element.textContent = cuteElements[Math.floor(Math.random() * cuteElements.length)];
+                // 随机位置和大小
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.fontSize = `${Math.random() * 20 + 16}px`;
+                element.style.color = [`#ff6b8b`, `#ff9a9e`, `#fad0c4`, `#fecfef`][Math.floor(Math.random() * 4)];
+                // 随机动画时长
+                element.style.animation = `fall ${Math.random() * 3 + 4}s linear forwards`;
+                fallingElements.appendChild(element);
+            }
+            // 成功后的提示
+            alert('哇！太好啦！我们要一直在一起哦！🥳');
+        });
+    </script>
+</body>
+</html>
